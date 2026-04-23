@@ -18,6 +18,7 @@ relevant sub-skill based on what you are currently doing.
 | You are doing... | Invoke sub-skill |
 |---|---|
 | Drawing an architecture diagram or SVG spec before coding | `build-agent-architecture-svg` (personal skill) |
+| About to implement anything (pre-flight before writing code) | `coding-discipline` |
 | Defining data models, schemas, state objects, or function signatures | `pydantic-contracts` |
 | Writing system/user prompts, few-shot examples, or structured output specs | `llm-prompts` |
 | Designing agent classes, orchestrators, tool routing, or multi-agent flows | `agent-architecture` |
@@ -27,12 +28,13 @@ relevant sub-skill based on what you are currently doing.
 ## When Multiple Apply
 
 Use this priority order:
-0. **Diagram first** — draw the architecture SVG before writing any code
-1. **Data contracts second** — define models before writing logic that consumes them
-2. **Architecture third** — decide agent boundaries before implementing agents
-3. **Prompts fourth** — write prompts after you know what data flows in/out
-4. **Async fifth** — add concurrency after the sequential path works
-5. **Structure last** — clean up and organize after the feature is working
+0. **Diagram first** — design what to build (architecture SVG, whiteboard, spec)
+1. **Discipline second** — govern how you build it (think, simplify, be surgical, verify)
+2. **Data contracts** — define models before writing logic that consumes them
+3. **Architecture** — decide agent boundaries before implementing agents
+4. **Prompts** — write prompts after you know what data flows in/out
+5. **Async** — add concurrency after the sequential path works
+6. **Structure last** — clean up and organize after the feature is working
 
 ## Quick Reference: Universal Rules
 
