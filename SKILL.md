@@ -36,6 +36,23 @@ Use this priority order:
 5. **Async** — add concurrency after the sequential path works
 6. **Structure last** — clean up and organize after the feature is working
 
+## Documentation Lookup: Context7
+
+When implementing code that uses an external library (LiteLLM, LangChain, Pydantic,
+OpenAI SDK, FastAPI, asyncio patterns, etc.), use the Context7 MCP tools to fetch
+current documentation **before** writing the integration code.
+
+| Situation | Action |
+|---|---|
+| Writing an LLM call wrapper or `response_format` usage | Context7 → look up the provider SDK's structured output docs |
+| Defining Pydantic models that interface with a library | Context7 → confirm the library's current model/schema API |
+| Adding a new dependency (e.g. `tenacity`, `httpx`) | Context7 → check latest usage patterns and config options |
+| Unsure if an API changed since your training data | Context7 → resolve the library, query the specific feature |
+
+**Workflow**: call `resolve-library-id` first to get the Context7 library ID, then
+call `query-docs` with a specific question. Prefer this over guessing or using
+potentially stale knowledge for any library that ships releases frequently.
+
 ## Quick Reference: Universal Rules
 
 These apply regardless of which sub-skill is active:

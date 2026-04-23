@@ -162,6 +162,13 @@ For each failed subtask:
 | No gap/error handling instruction | Silently drops failed inputs | Add explicit gap reporting rules |
 | Hardcoded date | Stale temporal context | Use `{now}` placeholder, format at call time |
 
+## Library-Specific Prompt Patterns
+
+Different LLM providers support structured output natively (OpenAI `response_format`,
+Gemini JSON schema, Anthropic tool-use-as-schema). When wiring prompts to a specific
+provider or SDK, use Context7 to look up the current API so your prompt + parsing
+code matches what the provider actually supports today.
+
 ## Checklist Before Moving On
 
 - [ ] All prompts live in `config/prompts.py` or `prompts/` directory
@@ -171,3 +178,4 @@ For each failed subtask:
 - [ ] Planner prompts specify subtask count range
 - [ ] Date-sensitive prompts include `{now}` placeholder
 - [ ] Prompts are tested: feed known input, validate output parses correctly
+- [ ] If using provider-native structured output, verified API via Context7

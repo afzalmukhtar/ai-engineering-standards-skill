@@ -127,6 +127,13 @@ def process(data: InputModel) -> ProcessResult:
 | `**data` unpacking without validation | Silent data corruption | Use `model_validate()` |
 | `status: str` | No constraint on values | Use `Literal["success", "failed"]` |
 
+## Provider-Specific Structured Output
+
+When using Pydantic models as `response_format` for LLM calls, the wiring differs
+by provider and SDK version. Use Context7 (`resolve-library-id` then `query-docs`)
+to look up the current structured output API for your provider before writing the
+integration code. Do not assume the API from memory — it changes frequently.
+
 ## Checklist Before Moving On
 
 - [ ] Every data structure crossing a module boundary is a `BaseModel`
@@ -135,3 +142,4 @@ def process(data: InputModel) -> ProcessResult:
 - [ ] LLM JSON output is parsed via `model_validate_json()` with fallback
 - [ ] No unused/dead models exist in the codebase
 - [ ] Function signatures use models, not `Dict[str, Any]`
+- [ ] If using `response_format`, verified current provider API via Context7
