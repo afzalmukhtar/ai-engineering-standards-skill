@@ -122,6 +122,23 @@ report = parse_llm_output(raw, Report, fallback=Report(
 - Cite the subtask ID (e.g. [T1]) when referencing a specific finding.
 ```
 
+### For Classification / Enum-Output Tasks
+
+Classification prompts fail differently from synthesis prompts. The model confidently assigns the wrong label using priors from training rather than the input — so the grounding must target label selection, not just content faithfulness.
+
+```
+GROUNDING RULES (strict):
+- Decide the label ONLY from the content of the input item.
+- Do NOT use priors from training about what the named entities "usually" mean.
+- Do NOT infer context that isn't present in the input.
+- If the input is ambiguous between two labels, choose the more conservative one
+  (define which direction is conservative for your domain in the prompt).
+- In the "reason" field, quote the specific phrase(s) from the input that drove
+  the label — this anchors the decision in evidence the reader can audit.
+```
+
+The "quote the driving phrase" rule is the key trick. It forces the model to point to input evidence, which measurably reduces hallucinated labels across any enum-output task (triage, moderation, routing, sentiment, intent detection, priority assignment).
+
 ### For Planning/Decomposition Tasks
 
 ```
@@ -174,6 +191,7 @@ code matches what the provider actually supports today.
 - [ ] All prompts live in `config/prompts.py` or `prompts/` directory
 - [ ] Every prompt specifies exact output format (JSON schema or template)
 - [ ] Synthesis prompts include grounding rule ("use ONLY provided data")
+- [ ] **Classification prompts** include grounding rule AND require the model to quote the driving phrase in the reason field
 - [ ] Writer/report prompts include gap reporting instructions
 - [ ] Planner prompts specify subtask count range
 - [ ] Date-sensitive prompts include `{now}` placeholder
